@@ -1,0 +1,9 @@
+version: 3
+vendoredDependencies:
+  licenseScanPathFilters:
+    only:
+      - "**/*.go"
+      - "**/LICENSE"
+    exclude:
+      - "**/test/**"
+      - "**/test/*"
