@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Copy .codespellrc
-        run: cp "./image/.codespellrc ./.codespellrc"
+        run: cp ./image/.codespellrc ./.codespellrc
       - name: Codespell
         # uses configuration within .codespellrc file
         uses: codespell-project/actions-codespell@v2
