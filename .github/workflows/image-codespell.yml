@@ -21,10 +21,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Copy .codespellrc
+        run: cp "./image/.codespellrc ./.codespellrc"
       - name: Codespell
         # uses configuration within .codespellrc file
         uses: codespell-project/actions-codespell@v2
         with:
           path: ./image
-          skip: ./image/vendor,./image/.git,./image/go.sum,./image/signature/fixtures,./image/signature/simplesigning/testdata
-          ignore_words_list: te,bu
