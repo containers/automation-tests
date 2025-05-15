@@ -14,9 +14,6 @@ jobs:
   image-codespell:
     name: Check for spelling errors
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./image
 
     steps:
       - name: Checkout
