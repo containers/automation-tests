@@ -24,3 +24,5 @@ jobs:
       - name: Codespell
         # uses configuration within .codespellrc file
         uses: codespell-project/actions-codespell@v2
+        with:
+          path: ./image
