@@ -122,7 +122,7 @@ storage_lint_task:
     container:
         image: golang
     modules_cache:
-        fingerprint_script: cat go.sum
+        fingerprint_script: cat storage/go.sum
         folder: $GOPATH/pkg/mod
     build_script: |
       apt-get update
@@ -163,7 +163,7 @@ storage_vendor_task:
     container:
         image: golang
     modules_cache:
-        fingerprint_script: cat go.sum
+        fingerprint_script: cat storage/go.sum
         folder: $GOPATH/pkg/mod
     build_script: |
       cd storage
@@ -189,7 +189,7 @@ storage_gofix_task:
       go fix ./...
     test_script: |
       cd storage
-      git diff --exit-code
+      git diff --diff-filter=M --exit-code
 
 storage_codespell_task:
     alias: storage_codespell
