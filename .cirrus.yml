@@ -55,7 +55,7 @@ gce_instance:
 
 storage_linux_testing: &linux_testing
     depends_on:
-        - lint
+        - storage_lint
     gce_instance:  # Only need to specify differences from defaults (above)
         image_name: "${VM_IMAGE}"
 
