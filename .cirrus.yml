@@ -135,28 +135,44 @@ storage_lint_task:
 
 
 # Update metadata on VM images referenced by this repository state
-storage_meta_task:
-    alias: storage_meta
+# TODO: This is not needed for monorep POC.
+# storage_meta_task:
+#     alias: storage_meta
 
-    container:
-        image: "quay.io/libpod/imgts:latest"
-        cpu: 1
-        memory: 1
+#     container:
+#         image: "quay.io/libpod/imgts:latest"
+#         cpu: 1
+#         memory: 1
 
-    env:
-        # Space-separated list of images used by this repository state
-        IMGNAMES: |-
-            ${FEDORA_CACHE_IMAGE_NAME}
-            ${DEBIAN_CACHE_IMAGE_NAME}
-        BUILDID: "${CIRRUS_BUILD_ID}"
-        REPOREF: "${CIRRUS_CHANGE_IN_REPO}"
-        GCPJSON: ENCRYPTED[244a93fe8b386b48b96f748342bf741350e43805eee81dd04b45093bdf737e540b993fc735df41f131835fa0f9b65826]
-        GCPNAME: ENCRYPTED[91cf7aa421858b26b67835978d224b4a5c46afcf52a0f1ec1b69a99b248715dc8e92a1b56fde18e092acf256fa80ae9c]
-        GCPPROJECT: ENCRYPTED[79b0f7eb5958e25bc7095d5d368fa8d94447a43ffacb9c693de438186e2f767b7efe9563d6954297ae4730220e10aa9c]
-        CIRRUS_CLONE_DEPTH: 1  # source not used
+#     env:
+#         # Space-separated list of images used by this repository state
+#         IMGNAMES: |-
+#             ${FEDORA_CACHE_IMAGE_NAME}
+#             ${DEBIAN_CACHE_IMAGE_NAME}
+#         BUILDID: "${CIRRUS_BUILD_ID}"
+#         REPOREF: "${CIRRUS_CHANGE_IN_REPO}"
+#         GCPJSON: ENCRYPTED[244a93fe8b386b48b96f748342bf741350e43805eee81dd04b45093bdf737e540b993fc735df41f131835fa0f9b65826]
+#         GCPNAME: ENCRYPTED[91cf7aa421858b26b67835978d224b4a5c46afcf52a0f1ec1b69a99b248715dc8e92a1b56fde18e092acf256fa80ae9c]
+#         GCPPROJECT: ENCRYPTED[79b0f7eb5958e25bc7095d5d368fa8d94447a43ffacb9c693de438186e2f767b7efe9563d6954297ae4730220e10aa9c]
+#         CIRRUS_CLONE_DEPTH: 1  # source not used
 
-    script: '/usr/local/bin/entrypoint.sh |& ${_TIMESTAMP}'
+#     script: '/usr/local/bin/entrypoint.sh |& ${_TIMESTAMP}'
 
+
+common_testing_task:
+  alias: common_testing
+  name: "Common Testing on $FEDORA_NAME"
+  env:
+    NETAVARK_BINARY: "/usr/libexec/podman/netavark"
+  test_script:
+    - export PATH="$PATH:$GOPATH/bin"
+    - cd common
+    - gpg --batch --passphrase '' --quick-gen-key tester@localhost default default never
+    - make vendor
+    - hack/tree_status.sh
+    - make build
+    - make build-cross
+    - make test
 
 storage_vendor_task:
     alias: storage_vendor
@@ -213,11 +229,12 @@ success_task:
         - storage_lint
         - storage_fedora_testing
         - storage_debian_testing
-        - storage_meta
+        # - storage_meta
         - storage_vendor
         - storage_cross
         - storage_gofix
         - storage_codespell
+        - common_testing_task
     container:
         image: golang:1.21
     clone_script: 'mkdir -p "$CIRRUS_WORKING_DIR"'  # Source code not needed
