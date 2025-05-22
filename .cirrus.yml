@@ -164,6 +164,9 @@ common_testing_task:
   name: "Common Testing on $FEDORA_NAME"
   env:
     NETAVARK_BINARY: "/usr/libexec/podman/netavark"
+  modules_cache:
+      fingerprint_script: cat storage/go.sum
+      folder: $GOPATH/pkg/mod
   test_script:
     - export PATH="$PATH:$GOPATH/bin"
     - cd common
