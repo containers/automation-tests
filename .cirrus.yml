@@ -234,7 +234,7 @@ success_task:
         - storage_cross
         - storage_gofix
         - storage_codespell
-        - common_testing_task
+        - common_testing
     container:
         image: golang:1.21
     clone_script: 'mkdir -p "$CIRRUS_WORKING_DIR"'  # Source code not needed
