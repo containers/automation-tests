@@ -137,9 +137,9 @@ github.com/containers/ocicrypt/spec
 github.com/containers/ocicrypt/utils
 github.com/containers/ocicrypt/utils/keyprovider
 # github.com/containers/storage v1.58.0
-## explicit; go 1.23.0
+## explicit; go 1.23.3
 # github.com/containers/storage v1.58.1-0.20250507171116-36d562d33cf2
-## explicit; go 1.23.0
+## explicit; go 1.23.3
 # github.com/coreos/go-oidc/v3 v3.14.1
 ## explicit; go 1.23.0
 github.com/coreos/go-oidc/v3/oidc
