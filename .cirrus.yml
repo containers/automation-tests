@@ -18,6 +18,8 @@ env:
 
     SKOPEO_PATH: "${GOPATH}/src/github.com/containers/skopeo"
     GOBIN: "${GOPATH}/bin"
+    GOSRC: &gosrc "/var/tmp/go/src/github.com/containers/image"
+
 
 
     ####
