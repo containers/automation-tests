@@ -189,7 +189,8 @@ image_validate_task:
         cd image
         git remote update
         make tools
-        ${GOBIN}/git-validation -q -run DCO,short-subject,dangling-whitespace -range $(git merge-base origin/${DEST_BRANCH} HEAD)..${CIRRUS_CHANGE_IN_REPO}
+        # TODO: Enable once we are done with monorepo tests.
+        # ${GOBIN}/git-validation -q -run DCO,short-subject,dangling-whitespace -range $(git merge-base origin/${DEST_BRANCH} HEAD)..${CIRRUS_CHANGE_IN_REPO}
         make validate
 
 
