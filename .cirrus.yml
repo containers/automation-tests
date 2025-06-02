@@ -11,7 +11,7 @@ env:
     CIRRUS_SHELL: "/bin/bash"
     # Automation script path relative to $CIRRUS_WORKING_DIR)
     SCRIPT_BASE: "./storage/contrib/cirrus"
-    IMAGE_SCRIPT_BASE: "./contrib/cirrus"
+    IMAGE_SCRIPT_BASE: "./image/contrib/cirrus"
     # No need to go crazy, but grab enough to cover most PRs
     CIRRUS_CLONE_DEPTH: 50
     DEST_BRANCH: "main"
@@ -224,7 +224,8 @@ image_test_task:
               BUILDTAGS: &withopengpg 'containers_image_openpgp'
     script: |
         cd image
-        ${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
+        ls -l CIRRUS_WORKING_DIR
+        ${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
 # #####
