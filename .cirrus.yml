@@ -205,22 +205,24 @@ image_cross_task:
         make cross
 
 
-# image_test_task:
-#     alias: image_test
-#     depends_on:
-#         - validate
-#     only_if: *not_docs
-#     gce_instance: *debian_vm
-#     matrix:
-#         - name: "Test"
-#           env:
-#               BUILDTAGS: ''
-#         - name: "Test w/ opengpg"
-#           env:
-#               BUILDTAGS: &withopengpg 'containers_image_openpgp'
-#     script: |
-#         cd image
-#         ${GOSRC}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
+image_test_task:
+    alias: image_test
+    depends_on:
+        - validate
+    only_if: *not_docs
+    gce_instance: *debian_vm
+    env:
+        HOME: "/root"  # default unset, needed by golangci-lint.
+    matrix:
+        - name: "Test"
+          env:
+              BUILDTAGS: ''
+        - name: "Test w/ opengpg"
+          env:
+              BUILDTAGS: &withopengpg 'containers_image_openpgp'
+    script: |
+        cd image
+        ${GOSRC}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
 # #####
@@ -344,7 +346,7 @@ success_task:
         - common_testing
         - image_validate
         - image_cross
-        # - image_test
+        - image_test
         # - image_test_skopeo
     container:
         image: golang:1.21
