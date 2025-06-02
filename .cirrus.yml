@@ -208,7 +208,7 @@ image_cross_task:
 image_test_task:
     alias: image_test
     depends_on:
-        - validate
+        - image_validate
     only_if: *not_docs
     gce_instance: *debian_vm
     env:
