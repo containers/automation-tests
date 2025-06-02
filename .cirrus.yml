@@ -169,6 +169,8 @@ common_testing_task:
     build_script: |
       cd common
       make vendor
+      apt-get update
+      apt-get install -y libbtrfs-dev libsubid-dev
     test_script: |
       cd common
       hack/tree_status.sh
