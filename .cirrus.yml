@@ -18,7 +18,7 @@ env:
 
     SKOPEO_PATH: "${GOPATH}/src/github.com/containers/skopeo"
     GOBIN: "${GOPATH}/bin"
-    GOSRC: &gosrc "/var/tmp/go/src/github.com/containers/image"
+    IMAGE_WORKING_DIR: "/var/tmp/go/src/github.com/containers/image"
 
 
 
@@ -224,7 +224,7 @@ image_test_task:
               BUILDTAGS: &withopengpg 'containers_image_openpgp'
     script: |
         cd image
-        ${GOSRC}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
+        ${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
 # #####
@@ -254,7 +254,7 @@ image_test_task:
 #           env:
 #               BUILDTAGS: *withopengpg
 #     setup_script: >-
-#         "${GOSRC}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
+#         "${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
 #     vendor_script: >-
 #         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" vendor
 #     build_script: >-
