@@ -224,7 +224,7 @@ image_test_task:
               BUILDTAGS: &withopengpg 'containers_image_openpgp'
     script: |
         cd image
-        ls -l CIRRUS_WORKING_DIR
+        ls -l ${CIRRUS_WORKING_DIR}
         ${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
