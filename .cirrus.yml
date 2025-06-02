@@ -194,13 +194,13 @@ image_validate_task:
         make validate
 
 
-# image_cross_task:
-#     alias: image_cross
-#     only_if: &not_docs $CIRRUS_CHANGE_TITLE !=~ '.*CI:DOCS.*'
-#     gce_instance: *debian_vm
-#     script: |
-#         cd image
-#         make cross
+image_cross_task:
+    alias: image_cross
+    only_if: &not_docs $CIRRUS_CHANGE_TITLE !=~ '.*CI:DOCS.*'
+    gce_instance: *debian_vm
+    script: |
+        cd image
+        make cross
 
 
 # image_test_task:
@@ -341,7 +341,7 @@ success_task:
         - storage_codespell
         - common_testing
         - image_validate
-        # - image_cross
+        - image_cross
         # - image_test
         # - image_test_skopeo
     container:
