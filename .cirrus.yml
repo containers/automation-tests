@@ -198,6 +198,8 @@ image_cross_task:
     alias: image_cross
     only_if: &not_docs $CIRRUS_CHANGE_TITLE !=~ '.*CI:DOCS.*'
     gce_instance: *debian_vm
+    env:
+        HOME: "/root"  # default unset, needed by golangci-lint.
     script: |
         cd image
         make cross
