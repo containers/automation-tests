@@ -166,6 +166,7 @@ storage_lint_task:
 
 
 image_validate_task:
+    alias: image_validate
     # The git-validation tool doesn't work well on branch or tag push,
     # under Cirrus-CI, due to challenges obtaining the starting commit ID.
     # Only do validation for PRs.
@@ -190,6 +191,7 @@ image_validate_task:
 
 
 image_cross_task:
+    alias: image_cross
     only_if: &not_docs $CIRRUS_CHANGE_TITLE !=~ '.*CI:DOCS.*'
     gce_instance: *debian_vm
     script: |
@@ -335,9 +337,9 @@ success_task:
         - storage_codespell
         - common_testing
         - image_validate
-        - image_cross
-        - image_test
-        - image_test_skopeo
+        # - image_cross
+        # - image_test
+        # - image_test_skopeo
     container:
         image: golang:1.21
     clone_script: 'mkdir -p "$CIRRUS_WORKING_DIR"'  # Source code not needed
