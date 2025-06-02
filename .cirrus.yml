@@ -215,6 +215,8 @@ image_test_task:
     gce_instance: *debian_vm
     env:
         HOME: "/root"  # default unset, needed by golangci-lint.
+        GOSRC: "${CIRRUS_WORKING_DIR}/image"
+    # Required for consistency with containers/skopeo CI
     matrix:
         - name: "Test"
           env:
