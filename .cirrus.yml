@@ -26,6 +26,8 @@ env:
     IMAGE_SUFFIX: "c20250422t130822z-f42f41d13"
     FEDORA_CACHE_IMAGE_NAME: "fedora-${IMAGE_SUFFIX}"
     DEBIAN_CACHE_IMAGE_NAME: "debian-${IMAGE_SUFFIX}"
+    FEDORA_CONTAINER_FQIN: "quay.io/libpod/fedora_podman:${IMAGE_SUFFIX}"
+
 
     ####
     #### Command variables to help avoid duplication
@@ -162,15 +164,13 @@ storage_lint_task:
 common_testing_task:
     alias: common_testing
     container:
-        image: golang
+        image: "${FEDORA_CONTAINER_FQIN}"
     modules_cache:
         fingerprint_script: cat common/go.sum
         folder: $GOPATH/pkg/mod
     build_script: |
       cd common
       make vendor
-      apt-get update
-      apt-get install -y libbtrfs-dev libsubid-dev
     test_script: |
       cd common
       hack/tree_status.sh
