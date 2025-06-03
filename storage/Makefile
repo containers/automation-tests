@@ -1,4 +1,4 @@
-.PHONY: \
+PHONY: \
 	all \
 	binary \
 	clean \
@@ -25,6 +25,7 @@
 	validate \
 	vendor \
 	vendor-in-container
+
 
 NATIVETAGS :=
 AUTOTAGS := $(shell ./hack/btrfs_tag.sh) $(shell ./hack/libsubid_tag.sh)
