@@ -108,6 +108,7 @@ storage_debian_testing_task: &storage_debian_testing
     <<: *linux_testing
     alias: storage_debian_testing
     name: *std_test_name
+    skip: "!changesInclude('storage/**')"
     env:
         OS_NAME: "${DEBIAN_NAME}"
         VM_IMAGE: "${DEBIAN_CACHE_IMAGE_NAME}"
@@ -128,6 +129,8 @@ storage_debian_testing_task: &storage_debian_testing
 storage_lint_task:
     alias: storage_lint
     name: "Storage: Lint"
+    skip: "!changesInclude('storage/**')"
+
     env:
         CIRRUS_WORKING_DIR: "/go/src/github.com/containers/storage"
     container:
