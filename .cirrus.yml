@@ -82,7 +82,7 @@ storage_linux_testing: &linux_testing
 storage_fedora_testing_task: &fedora_testing
     <<: *linux_testing
     alias: storage_fedora_testing
-    name: &std_test_name "${OS_NAME} ${TEST_DRIVER}"
+    name: &std_test_name Storage: "${OS_NAME} ${TEST_DRIVER}"
     env:
         OS_NAME: "${FEDORA_NAME}"
         VM_IMAGE: "${FEDORA_CACHE_IMAGE_NAME}"
@@ -126,6 +126,7 @@ storage_debian_testing_task: &storage_debian_testing
 
 storage_lint_task:
     alias: storage_lint
+    name: "Storage: Lint"
     env:
         CIRRUS_WORKING_DIR: "/go/src/github.com/containers/storage"
     container:
@@ -171,6 +172,7 @@ storage_lint_task:
 
 image_validate_task:
     alias: image_validate
+    name: "Image: Validate"
     # The git-validation tool doesn't work well on branch or tag push,
     # under Cirrus-CI, due to challenges obtaining the starting commit ID.
     # Only do validation for PRs.
@@ -197,6 +199,7 @@ image_validate_task:
 
 image_cross_task:
     alias: image_cross
+    name: "Image: Cross"
     only_if: &not_docs $CIRRUS_CHANGE_TITLE !=~ '.*CI:DOCS.*'
     gce_instance: *debian_vm
     env:
@@ -215,16 +218,15 @@ image_test_task:
     env:
         HOME: "/root"  # default unset, needed by golangci-lint.
         GOSRC: "${CIRRUS_WORKING_DIR}/image"
-        GOPATH: "${GOPATH}"
+        GOPATH: "/var/tmp/go"
     # Required for consistency with containers/skopeo CI
     matrix:
-        - name: "Test"
+        - name: "Image: Test"
           env:
               BUILDTAGS: ''
-        - name: "Test w/ opengpg"
+        - name: "Image: Test w/ opengpg"
           env:
               BUILDTAGS: &withopengpg 'containers_image_openpgp'
-              GOPATH: "${GOPATH}"
     script: |
         cd image
         ls -l ${CIRRUS_WORKING_DIR}
@@ -275,6 +277,7 @@ image_test_task:
 
 common_testing_task:
     alias: common_testing
+    name: "Common: Test"  
     container:
         image: "${FEDORA_CONTAINER_FQIN}"
     modules_cache:
@@ -292,6 +295,7 @@ common_testing_task:
 
 storage_vendor_task:
     alias: storage_vendor
+    name: "Vendor"
     container:
         image: golang
     modules_cache:
@@ -306,6 +310,7 @@ storage_vendor_task:
 
 storage_cross_task:
     alias: storage_cross
+    name: "Storage: Cross"
     container:
         image: golang:1.23
     build_script: |
@@ -314,6 +319,7 @@ storage_cross_task:
 
 storage_gofix_task:
     alias: storage_gofix
+    name: "Storage: gofix"
     container:
         image: golang:1.23
     build_script: |
@@ -325,6 +331,7 @@ storage_gofix_task:
 
 storage_codespell_task:
     alias: storage_codespell
+    name: "Storage: codespell"
     container:
         image: python
     build_script: pip install codespell
