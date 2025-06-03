@@ -15,11 +15,10 @@ env:
     # No need to go crazy, but grab enough to cover most PRs
     CIRRUS_CLONE_DEPTH: 50
     DEST_BRANCH: "main"
-
+    GOPATH: "/var/tmp/go"
     SKOPEO_PATH: "${GOPATH}/src/github.com/containers/skopeo"
     GOBIN: "${GOPATH}/bin"
     IMAGE_WORKING_DIR: "/var/tmp/go/src/github.com/containers/image"
-    GOPATH: "/var/tmp/go"
 
 
     ####
@@ -216,7 +215,7 @@ image_test_task:
     env:
         HOME: "/root"  # default unset, needed by golangci-lint.
         GOSRC: "${CIRRUS_WORKING_DIR}/image"
-        GOPATH: "${GOPATH}"
+        GOPATH: "$GOPATH"
     # Required for consistency with containers/skopeo CI
     matrix:
         - name: "Test"
