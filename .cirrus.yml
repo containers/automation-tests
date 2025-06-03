@@ -215,7 +215,7 @@ image_test_task:
     env:
         HOME: "/root"  # default unset, needed by golangci-lint.
         GOSRC: "${CIRRUS_WORKING_DIR}/image"
-        GOPATH: "$GOPATH"
+        GOPATH: "${GOPATH}"
     # Required for consistency with containers/skopeo CI
     matrix:
         - name: "Test"
@@ -224,9 +224,11 @@ image_test_task:
         - name: "Test w/ opengpg"
           env:
               BUILDTAGS: &withopengpg 'containers_image_openpgp'
+              GOPATH: "${GOPATH}"
     script: |
         cd image
         ls -l ${CIRRUS_WORKING_DIR}
+        echo "${GOPATH}"
         ${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
