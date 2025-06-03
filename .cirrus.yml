@@ -234,44 +234,48 @@ image_test_task:
         ${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh image_tests
 
 
-# #####
-# ##### NOTE: This task is subtantially duplicated in the containers/skopeo
-# ##### repository's `.cirrus.yml`.  Changes made here should be fully merged
-# ##### prior to being manually duplicated and maintained in containers/skopeo.
-# #####
-# image_test_skopeo_task:
-#     alias: image_test_skopeo
-#     only_if: *not_docs
-#     depends_on:
-#         - validate
-#     gce_instance:
-#         image_project: libpod-218412
-#         zone: "us-central1-f"
-#         cpu: 2
-#         memory: "4Gb"
-#         # Required to be 200gig, do not modify - has i/o performance impact
-#         # according to gcloud CLI tool warning messages.
-#         disk: 200
-#         image_name: ${FEDORA_CACHE_IMAGE_NAME}
-#     matrix:
-#         - name: "Skopeo Test"
-#           env:
-#               BUILDTAGS: ''
-#         - name: "Skopeo Test w/ opengpg"
-#           env:
-#               BUILDTAGS: *withopengpg
-#     setup_script: >-
-#         "${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
-#     vendor_script: >-
-#         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" vendor
-#     build_script: >-
-#         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" build
-#     unit_script: >-
-#         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" unit
-#     integration_script: >-
-#         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" integration
-#     system_script: >
-#         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" system
+#####
+##### NOTE: This task is subtantially duplicated in the containers/skopeo
+##### repository's `.cirrus.yml`.  Changes made here should be fully merged
+##### prior to being manually duplicated and maintained in containers/skopeo.
+#####
+image_test_skopeo_task:
+    alias: image_test_skopeo
+    only_if: *not_docs
+    depends_on:
+        - validate
+    gce_instance:
+        image_project: libpod-218412
+        zone: "us-central1-f"
+        cpu: 2
+        memory: "4Gb"
+        # Required to be 200gig, do not modify - has i/o performance impact
+        # according to gcloud CLI tool warning messages.
+        disk: 200
+        image_name: ${FEDORA_CACHE_IMAGE_NAME}
+    env:
+        HOME: "/root"  # default unset, needed by golangci-lint.
+        GOSRC: "${CIRRUS_WORKING_DIR}/image"
+        GOPATH: "/var/tmp/go"
+    matrix:
+        - name: "Image: Skopeo Test"
+          env:
+              BUILDTAGS: ''
+        - name: "Image: Skopeo Test w/ opengpg"
+          env:
+              BUILDTAGS: *withopengpg
+    setup_script: >-
+        "${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
+    vendor_script: >-
+        "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" vendor
+    build_script: >-
+        "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" build
+    unit_script: >-
+        "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" unit
+    integration_script: >-
+        "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" integration
+    system_script: >
+        "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" system
 
 
 
@@ -361,7 +365,7 @@ success_task:
         - image_validate
         - image_cross
         - image_test
-        # - image_test_skopeo
+        - image_test_skopeo
     container:
         image: golang:1.21
     clone_script: 'mkdir -p "$CIRRUS_WORKING_DIR"'  # Source code not needed
