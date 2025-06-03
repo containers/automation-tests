@@ -317,6 +317,7 @@ storage_vendor_task:
       hack/tree_status.sh
 
 storage_cross_task:
+    skip: "!changesInclude('storage/**')"
     alias: storage_cross
     name: "Storage: Cross"
     container:
@@ -326,6 +327,7 @@ storage_cross_task:
       make cross
 
 storage_gofix_task:
+    skip: "!changesInclude('storage/**')"
     alias: storage_gofix
     name: "Storage: gofix"
     container:
@@ -338,6 +340,7 @@ storage_gofix_task:
       git diff --diff-filter=M --exit-code
 
 storage_codespell_task:
+    skip: "!changesInclude('storage/**')"
     alias: storage_codespell
     name: "Storage: codespell"
     container:
