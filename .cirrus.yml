@@ -19,7 +19,7 @@ env:
     SKOPEO_PATH: "${GOPATH}/src/github.com/containers/skopeo"
     GOBIN: "${GOPATH}/bin"
     IMAGE_WORKING_DIR: "/var/tmp/go/src/github.com/containers/image"
-
+    GOPATH: "/var/tmp/go"
 
 
     ####
