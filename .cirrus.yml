@@ -16,7 +16,7 @@ env:
     CIRRUS_CLONE_DEPTH: 50
     DEST_BRANCH: "main"
     GOPATH: "/var/tmp/go"
-    SKOPEO_PATH: "${GOPATH}/src/github.com/containers/skopeo"
+    SKOPEO_PATH: "/var/tmp/go/src/github.com/containers/skopeo"
     GOBIN: "${GOPATH}/bin"
     IMAGE_WORKING_DIR: "/var/tmp/go/src/github.com/containers/image"
 
@@ -265,7 +265,7 @@ image_test_skopeo_task:
           env:
               BUILDTAGS: *withopengpg
     setup_script: >-
-        "${IMAGE_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
+        "${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
     vendor_script: >-
         "${SKOPEO_PATH}/${IMAGE_SCRIPT_BASE}/runner.sh" vendor
     build_script: >-
