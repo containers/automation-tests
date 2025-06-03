@@ -257,6 +257,7 @@ image_test_skopeo_task:
         HOME: "/root"  # default unset, needed by golangci-lint.
         GOSRC: "${CIRRUS_WORKING_DIR}/image"
         GOPATH: "/var/tmp/go"
+        SKOPEO_CI_BRANCH: "main"
     matrix:
         - name: "Image: Skopeo Test"
           env:
