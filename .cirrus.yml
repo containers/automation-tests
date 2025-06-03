@@ -259,6 +259,8 @@ image_test_skopeo_task:
         GOPATH: "/var/tmp/go"
         SKOPEO_CI_BRANCH: "main"
         SCRIPT_BASE: "./contrib/cirrus"
+        # Built along with the standard PR-based workflow in c/automation_images
+        SKOPEO_CIDEV_CONTAINER_FQIN: "quay.io/libpod/skopeo_cidev:${IMAGE_SUFFIX}"
     matrix:
         - name: "Image: Skopeo Test"
           env:
