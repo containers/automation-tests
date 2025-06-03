@@ -82,7 +82,7 @@ storage_linux_testing: &linux_testing
 storage_fedora_testing_task: &fedora_testing
     <<: *linux_testing
     alias: storage_fedora_testing
-    name: &std_test_name Storage: "${OS_NAME} ${TEST_DRIVER}"
+    name: &std_test_name "Storage: ${OS_NAME} ${TEST_DRIVER}"
     env:
         OS_NAME: "${FEDORA_NAME}"
         VM_IMAGE: "${FEDORA_CACHE_IMAGE_NAME}"
