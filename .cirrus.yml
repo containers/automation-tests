@@ -258,13 +258,14 @@ image_test_skopeo_task:
         GOSRC: "${CIRRUS_WORKING_DIR}/image"
         GOPATH: "/var/tmp/go"
         SKOPEO_CI_BRANCH: "main"
+        SCRIPT_BASE: "/contrib/cirrus"
     matrix:
         - name: "Image: Skopeo Test"
           env:
               BUILDTAGS: ''
         - name: "Image: Skopeo Test w/ opengpg"
           env:
-              BUILDTAGS: *withopengpg
+              BUILDTAGS: *withopengpga
     setup_script: >-
         "${CIRRUS_WORKING_DIR}/${IMAGE_SCRIPT_BASE}/runner.sh" setup
     vendor_script: >-
