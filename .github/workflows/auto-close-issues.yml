@@ -5,9 +5,12 @@ on:
 jobs:
   auto_close_issues:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - name: Close Issue
-        uses: peter-evans/close-issue@276d7966e389d888f011539a86c8920025ea0626
-        with:
-          comment: |
-            This repository has been migrated to https://github.com/containers/container-libs. Please open your issue there.
+    - name: Close issue
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: ${{ github.repository }}
+        ISSUE: ${{ github.event.issue.number }}
+      run: gh issue close --repo "$REPO" --comment "This repository has been migrated to https://github.com/containers/container-libs. Please open your issue there." "$ISSUE"
