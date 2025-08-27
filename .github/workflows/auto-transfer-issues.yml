@@ -1,0 +1,24 @@
+name: Transfer issues to container-libs.
+
+on:
+  issues:
+    types: opened
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: add label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
+        with:
+          labels: common
+
+      - name: Transfer Issue & Create Stub
+        uses: lando/transfer-issue-action@v2
+        with:
+          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          router: common:container-libs
