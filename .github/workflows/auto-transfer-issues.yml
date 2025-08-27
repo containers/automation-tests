@@ -2,7 +2,7 @@ name: Transfer issues to container-libs.
 
 on:
   issues:
-    types: opened
+    types: labeled
 
 permissions:
   issues: write
@@ -13,12 +13,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-
-      - name: add label
-        id: add_label
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: common
 
       - name: transfer issue
         uses: lando/transfer-issue-action@v2
