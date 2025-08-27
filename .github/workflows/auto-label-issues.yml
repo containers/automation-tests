@@ -1,0 +1,21 @@
+name: Transfer issues to container-libs.
+
+on:
+  issues:
+    types: opened
+
+permissions:
+  issues: write
+
+jobs:
+  transfer_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: add label
+        id: add_label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: common
