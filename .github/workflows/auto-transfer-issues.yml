@@ -4,6 +4,9 @@ on:
   issues:
     types: opened
 
+permissions:
+  issues: write
+
 jobs:
   add_label:
     runs-on: ubuntu-latest
@@ -13,12 +16,11 @@ jobs:
 
       - name: add label
         uses: actions-ecosystem/action-add-labels@v1
-        if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
         with:
           labels: common
 
-      - name: Transfer Issue & Create Stub
+      - name: transfer issuea
         uses: lando/transfer-issue-action@v2
         with:
-          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           router: common:container-libs
