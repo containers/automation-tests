@@ -1,4 +1,4 @@
-name: Transfer issues to container-libs.
+name: Label issues with "common" label.
 
 on:
   issues:
