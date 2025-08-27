@@ -8,7 +8,7 @@ permissions:
   issues: write
 
 jobs:
-  transfer_issue:
+  label_issue:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
