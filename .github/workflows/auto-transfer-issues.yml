@@ -8,19 +8,21 @@ permissions:
   issues: write
 
 jobs:
-  add_label:
+  transfer_issue:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: add label
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: common
+      # - name: add label
+      #   id: add_label
+      #   uses: actions-ecosystem/action-add-labels@v1
+      #   with:
+      #     labels: common
 
-      - name: transfer issuea
+      - name: transfer issue
         uses: lando/transfer-issue-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          router: common:container-libs
+          router: undefined:container-libs
+          apply_label: common:#01e468
